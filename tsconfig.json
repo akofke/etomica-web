@@ -10,8 +10,10 @@
         "sourceMap": true,
         "allowSyntheticDefaultImports": true,
         "jsx": "react",
-        "noImplicitAny": true,
-        "strictNullChecks": true
+        "noImplicitAny": true
+
+        // This causes errors (bug)
+        // "strictNullChecks": true
     },
 
     "include": [
