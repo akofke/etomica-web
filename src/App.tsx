@@ -2,10 +2,15 @@ import * as React from "react";
 
 import "./App.css";
 import { Hello } from "./components/hello";
-import { DatePicker } from "antd";
+import { Layout } from "antd";
 
-export const App = (props: any) => {
+const { Content, Footer, Sider } = Layout;
+
+export const App = () => {
     return (
-        <DatePicker />
+        <Layout style={{height: "100vh"}}>
+            <Sider>Sider</Sider>
+            <Content>Content</Content>
+        </Layout>
     );
 };
