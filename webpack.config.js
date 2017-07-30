@@ -3,6 +3,7 @@ const fs = require('fs');
 const webpack = require('webpack');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 const lessToJs = require('less-vars-to-js');
 const variableOverrides = lessToJs(fs.readFileSync(path.resolve(process.cwd(), "src/antd-overrides.less"), "utf8"));
@@ -72,6 +73,7 @@ module.exports = {
         new BundleAnalyzerPlugin({
             analyzerMode: 'static',
             openAnalyzer: false
-        })
+        }),
+        new CaseSensitivePathsPlugin()
     ]
 };
