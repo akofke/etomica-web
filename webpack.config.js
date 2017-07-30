@@ -19,7 +19,18 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: ['awesome-typescript-loader']
+                use: [
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            babelrc: false,
+                            presets: [ ["env", {"modules": false}] ],
+                            plugins: [ ["import", {libraryName: "antd", style: true}] ]
+                        }
+
+                    },
+                    'awesome-typescript-loader'
+                ]
             },
             {
                 enforce: "pre",
@@ -33,6 +44,14 @@ module.exports = {
                     'style-loader',
                     'css-loader'
                 ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    "less-loader"
+                ]
             }
         ]
     },
@@ -44,4 +63,4 @@ module.exports = {
             openAnalyzer: false
         })
     ]
-}
+};
