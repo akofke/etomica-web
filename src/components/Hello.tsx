@@ -5,7 +5,7 @@ export interface HelloProps {
     framework: string;
 }
 
-export class Hello extends React.Component<HelloProps, undefined> {
+export class Hello extends React.Component<HelloProps, any> {
     public render() {
         return (
             <h1>Hello from {this.props.compiler} and {this.props.framework}!</h1>
