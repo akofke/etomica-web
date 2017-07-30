@@ -1,6 +1,12 @@
-let path = require('path');
-let webpack = require('webpack');
-let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const path = require('path');
+const fs = require('fs');
+const webpack = require('webpack');
+
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+const lessToJs = require('less-vars-to-js');
+const variableOverrides = lessToJs(fs.readFileSync(path.resolve(process.cwd(), "src/antd-overrides.less"), "utf8"));
+// TODO: override font cdn
 
 module.exports = {
     entry: "./src/index.tsx",
@@ -50,7 +56,12 @@ module.exports = {
                 use: [
                     "style-loader",
                     "css-loader",
-                    "less-loader"
+                    {
+                        loader: "less-loader",
+                        options: {
+                            modifyVars: variableOverrides
+                        }
+                    }
                 ]
             }
         ]
