@@ -74,6 +74,11 @@ module.exports = {
             analyzerMode: 'static',
             openAnalyzer: false
         }),
-        new CaseSensitivePathsPlugin()
-    ]
+        new CaseSensitivePathsPlugin(),
+    ],
+
+    devServer: {
+        contentBase: path.join(process.cwd(), 'public'),
+        port: 9000
+    }
 };

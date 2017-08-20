@@ -1,3 +1,9 @@
 h1 {
     color: red;
 }
+
+#config-container {
+    width: 60%;
+    height: 400px;
+    position: relative;
+}
