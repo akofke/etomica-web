@@ -13,15 +13,8 @@
   "devDependencies": {
     "@types/webpack": "^3.0.5",
     "awesome-typescript-loader": "^3.2.2",
-    "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.1",
-    "babel-plugin-import": "^1.2.1",
-    "babel-preset-env": "^1.6.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "css-loader": "^0.28.4",
-    "less": "^2.7.2",
-    "less-loader": "^4.0.5",
-    "less-vars-to-js": "^1.1.2",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.18.2",
     "tslint": "^5.5.0",
@@ -34,7 +27,6 @@
   "dependencies": {
     "@types/react": "^15.6.0",
     "@types/react-dom": "^15.5.1",
-    "antd": "^2.12.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }

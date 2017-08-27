@@ -2,12 +2,8 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import { App } from "./App";
-import { LocaleProvider } from "antd";
-import enUS from "antd/lib/locale-provider/en_US";
 
 ReactDOM.render(
-    <LocaleProvider locale={enUS}>
-        <App/>
-    </LocaleProvider>,
+        <App/>,
     document.getElementById("example"),
 );

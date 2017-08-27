@@ -1,17 +1,10 @@
 import * as React from "react";
 
 import "./App.css";
-import { Layout } from "antd";
-
-const { Content, Footer, Sider } = Layout;
+import {Hello} from "./components/Hello";
 
 export const App = () => {
     return (
-        <Layout style={{height: "100vh"}}>
-            <Sider>Sider</Sider>
-            <Content>
-                <h1>Content</h1>
-            </Content>
-        </Layout>
+        <Hello compiler={"typescript"} framework={"react"}/>
     );
 };

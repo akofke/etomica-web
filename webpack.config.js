@@ -5,10 +5,6 @@ const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
-const lessToJs = require('less-vars-to-js');
-const variableOverrides = lessToJs(fs.readFileSync(path.resolve(process.cwd(), "src/antd-overrides.less"), "utf8"));
-// TODO: override font cdn
-
 module.exports = {
     entry: "./src/index.tsx",
     output: {
@@ -26,18 +22,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: [
-                    {
-                        loader: "babel-loader",
-                        options: {
-                            babelrc: false,
-                            presets: [ ["env", {"modules": false}] ],
-                            plugins: [ ["import", {libraryName: "antd", style: true}] ]
-                        }
-
-                    },
-                    'awesome-typescript-loader'
-                ]
+                use: ['awesome-typescript-loader']
             },
             {
                 enforce: "pre",
@@ -52,19 +37,6 @@ module.exports = {
                     'css-loader'
                 ]
             },
-            {
-                test: /\.less$/,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                    {
-                        loader: "less-loader",
-                        options: {
-                            modifyVars: variableOverrides
-                        }
-                    }
-                ]
-            }
         ]
     },
 
