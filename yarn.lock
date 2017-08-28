@@ -310,6 +310,10 @@ babel-code-frame@^6.11.0, babel-code-frame@^6.22.0:
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+babylonjs@^3.1.0-alpha1:
+  version "3.1.0-alpha1"
+  resolved "https://registry.yarnpkg.com/babylonjs/-/babylonjs-3.1.0-alpha1.tgz#fb147beeb9d89f7a71c65bf9f5ceebc97197f9b5"
+
 balanced-match@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-0.4.2.tgz#cb3f3e3c732dc0f01ee70b403f302e61d7709838"
