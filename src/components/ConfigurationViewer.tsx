@@ -6,7 +6,7 @@ export class ConfigurationViewer extends React.Component<any, any> {
     private sim3d: Simulation3D;
 
     public render() {
-        return <div id={"configuration-viewer"}></div>;
+        return <canvas id={"configuration-viewer"}></canvas>;
     }
 
     public componentDidMount() {
