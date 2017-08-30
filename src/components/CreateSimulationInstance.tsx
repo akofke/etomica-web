@@ -30,6 +30,7 @@ export class CreateSimulationInstance extends React.Component<any, any> {
             return (
                 <NonIdealState
                     title={"Creating Simulation..."}
+                    className={"create-instance-container"}
                     visual={<Spinner className="pt-large" intent={Intent.PRIMARY}/>}
                 />
             );

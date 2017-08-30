@@ -7,6 +7,7 @@ import {Navbar} from "./components/Navbar";
 import {Route} from "react-router";
 import {SimulationIndexView} from "./components/SimulationIndexView";
 import {CreateSimulationInstance} from "./components/CreateSimulationInstance";
+import {SimulationInstanceView} from "./components/SimulationInstanceView";
 
 export const App = () => (
     <Router>
@@ -14,6 +15,7 @@ export const App = () => (
             <Navbar/>
             <Route exact={true} path={"/"} component={SimulationIndexView}/>
             <Route path={"/create/:simClassName"} component={CreateSimulationInstance}/>
+            <Route path={"/view/:simId"} component={SimulationInstanceView}/>
         </div>
     </Router>
 );

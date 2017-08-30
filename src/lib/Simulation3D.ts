@@ -35,7 +35,7 @@ export class Simulation3D {
     }
 
     public addModel(model: any) {
-        const atoms: any[] = model[0]["#box"][0]["#leafList"];
+        const atoms: any[] = model["#box"][0]["#leafList"];
         atoms.forEach((atom, i, arr) => {
             const atomMesh = MeshBuilder.CreateSphere(`atom${i}`, {segments: 16, diameter: 1}, this.scene);
             const positions = atom.position;

@@ -19,3 +19,8 @@ h1 {
 .sim-class-card {
     margin: 0.5rem;
 }
+
+.sim-view-container, .create-instance-container {
+    padding-top: 0.5rem;
+}
+
