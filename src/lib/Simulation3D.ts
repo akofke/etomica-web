@@ -28,6 +28,8 @@ export class Simulation3D {
         // const sphere = MeshBuilder.CreateSphere('sphere1', {segments: 16, diameter: 2}, this.scene);
         // sphere.position.y = 1;
 
+        window.addEventListener("resize", () => this.engine.resize());
+
         this.engine.runRenderLoop(() => {
             this.scene.render();
         });
