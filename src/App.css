@@ -9,3 +9,13 @@ h1 {
     height: 100%;
     position: relative;
 }
+
+.sim-class-card-list {
+    padding-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sim-class-card {
+    margin: 0.5rem;
+}
