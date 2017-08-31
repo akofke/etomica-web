@@ -57,4 +57,8 @@ export class Simulation3D {
             mesh.position.z = coord[2];
         });
     }
+
+    public pickCoordinates(x: number, y: number): any {
+        return this.scene.pick(x, y);
+    }
 }

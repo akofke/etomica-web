@@ -1,7 +1,9 @@
 import * as React from "react";
 import {Simulation3D} from "../lib/Simulation3D";
 import {createSimulationInstance, fetchModel, treeifyModel} from "../api/SimulationModel";
+import {ContextMenuTarget, Menu} from "@blueprintjs/core";
 
+@ContextMenuTarget
 export class ConfigurationViewer extends React.Component<any, any> {
     private element: HTMLCanvasElement;
     private sim3d: Simulation3D;
@@ -28,5 +30,12 @@ export class ConfigurationViewer extends React.Component<any, any> {
             console.log(event);
             this.sim3d.updatePositions(JSON.parse(event.data));
         });
+    }
+
+    public renderContextMenu(e: React.MouseEvent<HTMLElement>) {
+        console.log(this.sim3d.pickCoordinates(e.clientX, e.clientY));
+        return (
+            <Menu/>
+        );
     }
 }
