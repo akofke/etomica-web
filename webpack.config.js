@@ -4,6 +4,7 @@ const webpack = require('webpack');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: "./src/index.tsx",
@@ -32,10 +33,10 @@ module.exports = {
 
             {
                 test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -45,6 +46,8 @@ module.exports = {
     },
 
     plugins: [
+        new ExtractTextPlugin("styles.css"),
+
         new webpack.optimize.ModuleConcatenationPlugin(),
         new BundleAnalyzerPlugin({
             analyzerMode: 'static',

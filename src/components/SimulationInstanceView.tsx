@@ -2,6 +2,7 @@ import * as React from "react";
 import {fetchModel, treeifyModel} from "../api/SimulationModel";
 import {Intent, NonIdealState, Spinner} from "@blueprintjs/core";
 import {ConfigurationViewer} from "./ConfigurationViewer";
+import {SimStatusControls} from "./SimStatusControls";
 
 export class SimulationInstanceView extends React.Component<any, any> {
     private simId: string;
