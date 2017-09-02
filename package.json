@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --display-optimization-bailout"
+    "build": "webpack --display-optimization-bailout",
+    "start": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +37,7 @@
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.6.1",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "two.js": "git://github.com/jonobr1/two.js.git#dev"
   }
 }
