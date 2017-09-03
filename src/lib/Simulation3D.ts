@@ -1,6 +1,6 @@
 import {
     Engine, Scene, FreeCamera, Light, Vector3, HemisphericLight, MeshBuilder, ArcRotateCamera,
-    Camera, AnaglyphArcRotateCamera, Mesh, PickingInfo, LinesMesh, StandardMaterial, Color3
+    Camera, AnaglyphArcRotateCamera, Mesh, PickingInfo, LinesMesh, StandardMaterial, Color3, Color4
 } from "babylonjs";
 
 export class Simulation3D {
@@ -52,22 +52,28 @@ export class Simulation3D {
         const boxEdgeMat = new StandardMaterial("boxEdgeMat", this.scene);
         boxEdgeMat.alpha = 1;
         boxEdgeMat.diffuseColor = new Color3(0.9, 0.1, 0.1);
+        console.log(boxEdgeMat);
         const edges: any[] = model["#box"][0]["#boundary"]["#shape"]["#edges"];
         edges.forEach((edge) => {
             const edgeVertices: any[] = edge["#vertices"];
-            // const edgeMesh = Mesh.CreateLines("box", edgeVertices.map((v) => new Vector3(v[0], v[1], v[2])), this.scene);
-            const edgeMesh = Mesh.CreateTube(
-                `box`,
-                edgeVertices.map((v) => new Vector3(v[0], v[1], v[2])),
-                1,
-                8,
-                () => 0.01,
-                Mesh.CAP_ALL,
-                this.scene
-            );
-            edgeMesh.material = boxEdgeMat;
+            const edgeMesh = Mesh.CreateLines("box", edgeVertices.map((v) => new Vector3(v[0], v[1], v[2])), this.scene);
+            edgeMesh.material.alpha = 0.0;
+            edgeMesh.enableEdgesRendering();
+            edgeMesh.edgesWidth = 4.0;
+            edgeMesh.edgesColor = new Color4(0, 0, 1, 1);
+            // const edgeMesh = Mesh.CreateTube(
+            //     `box`,
+            //     edgeVertices.map((v) => new Vector3(v[0], v[1], v[2])),
+            //     1,
+            //     8,
+            //     () => 0.01,
+            //     Mesh.CAP_ALL,
+            //     this.scene
+            // );
+            // edgeMesh.material = boxEdgeMat;
             this.edgeMeshes.push(edgeMesh);
         });
+        console.log(this.scene);
     }
 
     public updatePositions(coords: number[][][]) {
