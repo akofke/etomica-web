@@ -6,6 +6,9 @@
     ],
     "jsRules": {},
     "rules": {
+        "trailing-comma": false,
+        "no-trailing-whitespace": false,
+        "interface-name": false
     },
     "rulesDirectory": []
 }

@@ -1,12 +1,12 @@
 import * as React from "react";
-import {Simulation3D} from "../lib/Simulation3D";
+import {SimulationDisplay3D} from "../lib/simulationDisplay/SimulationDisplay3D";
 import {createSimulationInstance, fetchModel, treeifyModel} from "../api/SimulationModel";
 import {ContextMenuTarget, Menu} from "@blueprintjs/core";
 
 @ContextMenuTarget
 export class ConfigurationViewer extends React.Component<any, any> {
     private element: HTMLCanvasElement;
-    private sim3d: Simulation3D;
+    private sim3d: SimulationDisplay3D;
     private id: string;
     private modelTree: any;
 
@@ -17,12 +17,16 @@ export class ConfigurationViewer extends React.Component<any, any> {
     }
 
     public render() {
-        return <canvas id={"configuration-viewer"}></canvas>;
+        return <canvas id="configuration-viewer" ref={this.setCanvasRef}>No Canvas</canvas>;
     }
 
+    private setCanvasRef = (canvas: HTMLCanvasElement) => {
+        this.element = canvas;
+    };
+
     public componentDidMount() {
-        this.element = document.getElementById("configuration-viewer") as HTMLCanvasElement;
-        this.sim3d = new Simulation3D(this.element);
+        console.log(this.element);
+        this.sim3d = new SimulationDisplay3D(this.element);
 
         this.sim3d.addModel(this.modelTree);
         const socket = new WebSocket(`ws://localhost:8080/simulations/${this.id}/configuration`);
