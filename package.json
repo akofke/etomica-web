@@ -37,7 +37,6 @@
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.6.1",
-    "react-router-dom": "^4.2.2",
-    "two.js": "git://github.com/jonobr1/two.js.git#dev"
+    "react-router-dom": "^4.2.2"
   }
 }
