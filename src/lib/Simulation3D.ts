@@ -5,6 +5,7 @@ export class Simulation3D {
     private engine: BABYLON.Engine;
     private scene: BABYLON.Scene;
     private camera: BABYLON.Camera;
+    private followCam: BABYLON.FollowCamera;
     private light: BABYLON.Light;
 
     private atomInstances: BABYLON.InstancedMesh[] = [];
@@ -19,6 +20,7 @@ export class Simulation3D {
         // this.camera = new FreeCamera("camera1", new Vector3(0, 5, -10), this.scene);
         this.camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
         // this.camera = new AnaglyphArcRotateCamera("aar_cam", -Math.PI/2, Math.PI/4, 20, Vector3.Zero(), 0.033, this.scene);
+        this.followCam = new BABYLON.FollowCamera("followCam", BABYLON.Vector3.Zero(), this.scene);
 
 
         this.scene.activeCamera = this.camera;
@@ -76,6 +78,12 @@ export class Simulation3D {
 
     public pick(): BABYLON.PickingInfo {
         return this.scene.pick(this.scene.pointerX, this.scene.pointerY);
+    }
+
+    public followAtomCam(mesh: BABYLON.AbstractMesh) {
+        this.followCam.lockedTarget = mesh;
+        this.scene.activeCamera = this.followCam;
+
     }
 
     private addAtomTypes(model: any) {
