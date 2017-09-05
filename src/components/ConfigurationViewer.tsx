@@ -17,11 +17,10 @@ export class ConfigurationViewer extends React.Component<any, any> {
     }
 
     public render() {
-        return <canvas id={"configuration-viewer"}></canvas>;
+        return <canvas id={"configuration-viewer"} ref={this.setCanvasRef}>No Canvas</canvas>;
     }
 
     public componentDidMount() {
-        this.element = document.getElementById("configuration-viewer") as HTMLCanvasElement;
         this.sim3d = new Simulation3D(this.element);
 
         this.sim3d.addModel(this.modelTree);
@@ -37,5 +36,9 @@ export class ConfigurationViewer extends React.Component<any, any> {
         return (
             <Menu/>
         );
+    }
+
+    private setCanvasRef = (canvas: HTMLCanvasElement) => {
+        this.element = canvas;
     }
 }
