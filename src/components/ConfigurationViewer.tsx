@@ -32,7 +32,7 @@ export class ConfigurationViewer extends React.Component<any, any> {
     }
 
     public renderContextMenu(e: React.MouseEvent<HTMLElement>) {
-        console.log(this.sim3d.pickCoordinates(e.clientX, e.clientY));
+        console.log(this.sim3d.pick());
         return (
             <Menu/>
         );
