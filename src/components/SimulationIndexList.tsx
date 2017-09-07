@@ -14,8 +14,12 @@ const cardList = (simClassInfo: any[]) => (
         <Link to={`/create/${classInfo.className}`}>
             <div className="pt-card pt-interactive sim-class-card">
                 <h6>{classInfo.className}</h6>
-                <p>{classInfo.javadoc}</p>
+                <p dangerouslySetInnerHTML={javadocHTML(classInfo.javadoc)}></p>
             </div>
         </Link>
     ))
 );
+
+const javadocHTML = (javadoc: string) => {
+    return {__html: javadoc};
+}
