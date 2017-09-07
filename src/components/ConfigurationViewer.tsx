@@ -1,12 +1,14 @@
 import * as React from "react";
 import {Simulation3D} from "../lib/Simulation3D";
+import {SimulationDisplay} from "../lib/SimulationDisplay";
 import {createSimulationInstance, fetchModel, treeifyModel} from "../api/SimulationModel";
 import { ContextMenuTarget, Menu, MenuItem } from "@blueprintjs/core";
+import { Simulation2D } from "../lib/Simulation2D";
 
 @ContextMenuTarget
 export class ConfigurationViewer extends React.Component<any, any> {
     private element: HTMLCanvasElement;
-    private sim3d: Simulation3D;
+    private simDisplay: SimulationDisplay;
     private id: string;
     private modelTree: any;
 
@@ -21,27 +23,36 @@ export class ConfigurationViewer extends React.Component<any, any> {
     }
 
     public componentDidMount() {
-        this.sim3d = new Simulation3D(this.element);
+        const space = this.getSpace(this.modelTree);
+        if(space === 3) {
+            this.simDisplay = new Simulation3D(this.element);
+        } else if(space === 2) {
+            this.simDisplay = new Simulation2D(this.element);
+        }
 
-        this.sim3d.addModel(this.modelTree);
+        this.simDisplay.addModel(this.modelTree);
         const socket = new WebSocket(`ws://localhost:8080/simulations/${this.id}/configuration`);
         socket.addEventListener("message", (event) => {
             console.log(event);
-            this.sim3d.updatePositions(JSON.parse(event.data));
+            this.simDisplay.updatePositions(JSON.parse(event.data));
         });
     }
 
     public renderContextMenu(e: React.MouseEvent<HTMLElement>) {
-        const pick = this.sim3d.pick();
+        const pick = this.simDisplay.pick();
         console.log(pick);
         return (
             <Menu>
-                <MenuItem text="Follow Atom" onClick={() => this.sim3d.followAtomCam(pick.pickedMesh)}/>
+                <MenuItem text="Follow Atom" onClick={() => this.simDisplay.followAtom(pick.pickedMesh)}/>
             </Menu>
         );
     }
 
     private setCanvasRef = (canvas: HTMLCanvasElement) => {
         this.element = canvas;
+    }
+
+    private getSpace(model: any): number {
+        return model["#space"]["d"];
     }
 }

@@ -1,26 +1,25 @@
 import * as BABYLON from "babylonjs";
 import { SimulationDisplay } from "./SimulationDisplay";
 
-export class Simulation3D extends SimulationDisplay {
-
+export class Simulation2D extends SimulationDisplay {
     constructor(mountElement: HTMLCanvasElement) {
-        super()
+        super();
         this.element = mountElement;
         this.engine = new BABYLON.Engine(this.element, true);
         this.scene = new BABYLON.Scene(this.engine);
 
-        // this.camera = new FreeCamera("camera1", new Vector3(0, 5, -10), this.scene);
-        this.mainCam = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
-        // this.camera = new AnaglyphArcRotateCamera("aar_cam", -Math.PI/2, Math.PI/4, 20, Vector3.Zero(), 0.033, this.scene);
-        this.followCam = new BABYLON.FollowCamera("followCam", BABYLON.Vector3.Zero(), this.scene);
-
-
+        this.mainCam = new BABYLON.FreeCamera("MainCamera", new BABYLON.Vector3(0, 0, -20), this.scene);
+        this.followCam = new BABYLON.FollowCamera("FollowCam", BABYLON.Vector3.Zero(), this.scene);
+        this.mainCam.mode = BABYLON.Camera.ORTHOGRAPHIC_CAMERA;
+        this.mainCam.orthoBottom = -8;
+        this.mainCam.orthoTop = 8;
+        this.mainCam.orthoLeft = -8;
+        this.mainCam.orthoRight = 8;
         this.scene.activeCamera = this.mainCam;
-        this.mainCam.attachControl(this.element, false);
+        // this.mainCam.attachControl(this.element, false);
 
-        this.light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), this.scene);
-        // const sphere = MeshBuilder.CreateSphere('sphere1', {segments: 16, diameter: 2}, this.scene);
-        // sphere.position.y = 1;
+        this.light = new BABYLON.DirectionalLight("DirLight", new BABYLON.Vector3(0, 0, 1), this.scene); 
+        this.light.intensity = 0.4;
 
         window.addEventListener("resize", () => this.engine.resize());
         console.log(this.scene);
@@ -28,10 +27,9 @@ export class Simulation3D extends SimulationDisplay {
         this.engine.runRenderLoop(() => {
             this.scene.render();
         });
-
     }
 
-    public addModel(model: any) {
+    public addModel(model: any): void {
         this.addAtomTypes(model);
 
         const atoms: any[] = model["#box"][0]["#leafList"];
@@ -41,14 +39,14 @@ export class Simulation3D extends SimulationDisplay {
             const pos = atom.position;
             atomInstance.position.x = pos[0];
             atomInstance.position.y = pos[1];
-            atomInstance.position.z = pos[2];
+            atomInstance.position.z = 0
             this.atomInstances.push(atomInstance);
         });
 
         const edges: any[] = model["#box"][0]["#boundary"]["#shape"]["#edges"];
         edges.forEach((edge) => {
             const edgeVertices: any[] = edge["#vertices"];
-            const edgeMesh = BABYLON.Mesh.CreateLines("box", edgeVertices.map((v) => new BABYLON.Vector3(v[0], v[1], v[2])), this.scene);
+            const edgeMesh = BABYLON.Mesh.CreateLines("box", edgeVertices.map((v) => new BABYLON.Vector3(v[0], v[1], 0)), this.scene);
             edgeMesh.material.alpha = 0.0;
             edgeMesh.enableEdgesRendering();
             edgeMesh.edgesWidth = 4.0;
@@ -57,23 +55,21 @@ export class Simulation3D extends SimulationDisplay {
         });
         console.log(this.scene);
     }
-
-    public updatePositions(coords: number[][][]) {
+    public updatePositions(coords: number[][][]): void {
         const box = coords[0];
         box.forEach((coord, i, arr) => {
             const mesh = this.atomInstances[i];
             mesh.position.x = coord[0];
             mesh.position.y = coord[1];
-            mesh.position.z = coord[2];
-        });
+        })
     }
 
     private addAtomTypes(model: any) {
         model["#species"].forEach((species: any) => {
             species["#atomType"].forEach((atomType: any) => {
-                const baseMesh = BABYLON.MeshBuilder.CreateSphere(
+                const baseMesh = BABYLON.MeshBuilder.CreateDisc(
                     `atomType${atomType.index}`,
-                    {segments: 16, diameter: 1},
+                    {radius: 0.3},
                     this.scene
                 );
                 baseMesh.isVisible = false;
@@ -89,10 +85,5 @@ export class Simulation3D extends SimulationDisplay {
             });
         });
     }
-}
 
-interface IAtomTypes {
-    [atomTypeIndex: number]: {
-        baseMesh: BABYLON.Mesh
-    }
 }
