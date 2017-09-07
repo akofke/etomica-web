@@ -21,7 +21,7 @@ export class SimulationIndexView extends React.Component<any, any> {
         if (!this.state.loaded) {
             return <Spinner/>;
         } else {
-            return <SimulationIndexList classNames={this.state.data}/>;
+            return <SimulationIndexList simClassInfo={this.state.data}/>;
         }
     }
 }
