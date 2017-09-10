@@ -69,7 +69,7 @@ export class Simulation2D extends SimulationDisplay {
             species["#atomType"].forEach((atomType: any) => {
                 const baseMesh = BABYLON.MeshBuilder.CreateDisc(
                     `atomType${atomType.index}`,
-                    {radius: 0.3},
+                    {radius: 0.5},
                     this.scene
                 );
                 baseMesh.isVisible = false;
