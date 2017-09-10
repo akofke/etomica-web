@@ -1,13 +1,14 @@
 @import "~@blueprintjs/core/dist/blueprint.css";
+@import "~react-grid-layout/css/styles.css";
+@import "~react-resizable/css/styles.css";
 
 h1 {
     color: red;
 }
 
-#configuration-viewer {
-    width: 80vh;
-    height: 80vh;
-    position: relative;
+#configuration-viewer, .config-viewer-container {
+    width: 100%;
+    height: 100%;
 }
 
 .sim-class-card-list {

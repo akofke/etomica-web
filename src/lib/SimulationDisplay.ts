@@ -24,6 +24,9 @@ export abstract class SimulationDisplay {
         this.scene.activeCamera = this.followCam;
     }
 
+    public resize() {
+        this.engine.resize();
+    }
     
 }
 

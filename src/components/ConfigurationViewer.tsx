@@ -19,7 +19,11 @@ export class ConfigurationViewer extends React.Component<any, any> {
     }
 
     public render() {
-        return <canvas id={"configuration-viewer"} ref={this.setCanvasRef}>No Canvas</canvas>;
+        return (
+            <div className={"config-viewer-container"}>
+                <canvas id={"configuration-viewer"} ref={this.setCanvasRef}>No Canvas</canvas>
+            </div>
+        );
     }
 
     public componentDidMount() {
@@ -46,6 +50,10 @@ export class ConfigurationViewer extends React.Component<any, any> {
                 <MenuItem text="Follow Atom" onClick={() => this.simDisplay.followAtom(pick.pickedMesh)}/>
             </Menu>
         );
+    }
+
+    public resize() {
+        this.simDisplay.resize();
     }
 
     private setCanvasRef = (canvas: HTMLCanvasElement) => {

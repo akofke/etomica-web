@@ -3,10 +3,16 @@ import {fetchModel, treeifyModel} from "../api/SimulationModel";
 import {Intent, NonIdealState, Spinner} from "@blueprintjs/core";
 import {ConfigurationViewer} from "./ConfigurationViewer";
 import {SimStatusControls} from "./SimStatusControls";
+import {WidthProvider} from "react-grid-layout";
+import * as ReactGridLayout from "react-grid-layout";
+
+const GridLayout = WidthProvider(ReactGridLayout);
 
 export class SimulationInstanceView extends React.Component<any, any> {
     private simId: string;
     private modelTree: any;
+    private layout: any[];
+    private configViewerComponent: ConfigurationViewer;
 
     constructor(props: any) {
         super(props);
@@ -16,6 +22,11 @@ export class SimulationInstanceView extends React.Component<any, any> {
         this.state = {
             loading: true,
         };
+
+        this.layout = [
+            {i: "config-viewer", x: 0, y: 0, w: 6, h: 6},
+            {i: "test", x: 7, y: 0, w: 2, h: 2}
+        ]
     }
 
     public componentDidMount() {
@@ -39,9 +50,12 @@ export class SimulationInstanceView extends React.Component<any, any> {
             );
         } else {
             return (
-                <div className="sim-view-container">
-                    <ConfigurationViewer modelTree={this.modelTree} id={this.simId}/>
-                </div>
+                <GridLayout className="sim-view-container" layout={this.layout} rowHeight={30} cols={12} onResize={() => this.configViewerComponent.resize()}>
+                    <div key={"config-viewer"}>
+                        <ConfigurationViewer modelTree={this.modelTree} id={this.simId} ref={(viewer: any) => this.configViewerComponent = viewer}/>
+                    </div>
+                    <div key={"test"}>Test</div>
+                </GridLayout>
             );
         }
     }
