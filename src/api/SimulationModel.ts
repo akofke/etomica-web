@@ -25,3 +25,7 @@ export const treeifyModel = (model: any) => {
         });
     });
 };
+
+export const getAvailableMeters = (simId: string) => {
+    return Axios.get(`http://localhost:8080/simulations/${simId}/data/meters`);
+};

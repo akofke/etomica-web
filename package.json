@@ -30,7 +30,8 @@
     "webpack-dev-server": "^2.6.1"
   },
   "dependencies": {
-    "@blueprintjs/core": "^1.26.0",
+    "@blueprintjs/core": "^1.28.0",
+    "@blueprintjs/labs": "^0.9.0",
     "@types/react": "^15.6.0",
     "@types/react-dom": "^15.5.1",
     "axios": "^0.16.2",

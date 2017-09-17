@@ -11,6 +11,11 @@ h1 {
     height: 100%;
 }
 
+.config-viewer-container {
+    padding: 10px;
+    background: gainsboro;
+}
+
 .sim-class-card-list {
     padding-top: 0.5rem;
     display: flex;
@@ -25,3 +30,7 @@ h1 {
     padding-top: 0.5rem;
 }
 
+.popover-menu .pt-popover-content {
+    max-height: 500px;
+    overflow-y: auto;
+}

@@ -5,6 +5,7 @@ import {ConfigurationViewer} from "./ConfigurationViewer";
 import {SimStatusControls} from "./SimStatusControls";
 import {WidthProvider} from "react-grid-layout";
 import * as ReactGridLayout from "react-grid-layout";
+import {AddMeterForm} from "./AddMeterForm";
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
@@ -25,7 +26,8 @@ export class SimulationInstanceView extends React.Component<any, any> {
 
         this.layout = [
             {i: "config-viewer", x: 0, y: 0, w: 6, h: 6},
-            {i: "test", x: 7, y: 0, w: 2, h: 2}
+            {i: "test", x: 7, y: 0, w: 2, h: 2},
+            {i: "form", x: 0, y: 0, w: 2, h: 3, static: true},
         ]
     }
 
@@ -55,6 +57,9 @@ export class SimulationInstanceView extends React.Component<any, any> {
                         <ConfigurationViewer modelTree={this.modelTree} id={this.simId} ref={(viewer: any) => this.configViewerComponent = viewer}/>
                     </div>
                     <div key={"test"}>Test</div>
+                    <div key={"form"}>
+                        <AddMeterForm simId={this.simId}/>
+                    </div>
                 </GridLayout>
             );
         }
