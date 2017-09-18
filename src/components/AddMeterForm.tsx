@@ -2,6 +2,7 @@ import * as React from "react";
 import {Button, Classes, Intent, MenuItem, NonIdealState, Spinner} from "@blueprintjs/core";
 import {Select, ISelectItemRendererProps} from "@blueprintjs/labs";
 import {getAvailableMeters} from "../api/SimulationModel";
+import {FormEvent} from "react";
 
 export interface IConstructionInfo {
     className: string;
@@ -14,53 +15,58 @@ export interface IConstructionInfo {
     };
 }
 
+export interface IConstructionParams {
+    className: string;
+    constructorParams: number[];
+    paramsMap: {
+        [propName: string]: string;
+    };
+}
+
+interface IMeterFormProps {
+    onSubmit: (params: IConstructionParams) => void;
+    model: any;
+    meters: IConstructionInfo[];
+}
+
+interface IMeterFormState {
+    selectedMeter: IConstructionInfo;
+    meterParams: IConstructionParams;
+}
+
 const MeterSelect = Select.ofType<IConstructionInfo>();
 
-export class AddMeterForm extends React.Component<any, any> {
-    private simId: any;
+export class AddMeterForm extends React.Component<IMeterFormProps, IMeterFormState> {
 
-    constructor(props: any) {
-        super();
-        this.simId = props.simId;
+    constructor(props: IMeterFormProps) {
+        super(props);
         this.state = {
-            loading: true,
-        };
+            selectedMeter: null,
+            meterParams: {
+                className: "",
+                constructorParams: [],
+                paramsMap: {},
+            }
+        }
     }
 
-    public componentDidMount() {
-        getAvailableMeters(this.simId).then((resp) => {
-            this.setState({
-                meterInfos: resp.data as IConstructionInfo[],
-                loading: false,
-            });
-
-            console.log(this.state.meterInfos);
-        });
-    }
 
     public render() {
-        if(this.state.loading) {
-            return (
-                <NonIdealState
-                    className={"sim-view-container"}
-                    title={"Loading Simulation..."}
-                    visual={<Spinner className="pt-large" intent={Intent.PRIMARY}/>}
+        return (
+            <MeterSelect
+                items={this.props.meters}
+                itemRenderer={this.renderMeterMenuItem}
+                onItemSelect={this.updateSelectedMeter}
+                itemPredicate={AddMeterForm.filter}
+                popoverProps={{popoverClassName: "popover-menu"}}
+            >
+                <Button
+                    text={this.state.selectedMeter ? this.state.selectedMeter.className : "Select a meter"}
+                    rightIconName={"double-caret-vertical"}
                 />
-            );
-        } else {
-            return (
-                <MeterSelect
-                    items={this.state.meterInfos}
-                    itemRenderer={this.renderMeterMenuItem}
-                    onItemSelect={this.update}
-                    itemPredicate={this.filter}
-                    popoverProps={{popoverClassName: "popover-menu"}}
-                >
-                    <Button text={this.state.meterInfos[0].className} rightIconName={"double-caret-vertical"}/>
-                </MeterSelect>
+            </MeterSelect>
 
-            );
-        }
+        );
     }
 
     private renderMeterMenuItem = (props: ISelectItemRendererProps<IConstructionInfo>) => (
@@ -72,9 +78,29 @@ export class AddMeterForm extends React.Component<any, any> {
         />
     )
 
-    private update = () => {};
+    private renderForm = () => (
+        <form onSubmit={this.handleSubmit}>
 
-    private filter(query: string, meter: IConstructionInfo, index: number) {
+        </form>
+    )
+
+    private updateSelectedMeter = (selectedMeter: IConstructionInfo) => {
+        this.setState({
+            selectedMeter,
+            meterParams: {
+                className: selectedMeter.className,
+                constructorParams: [],
+                paramsMap: {},
+            },
+        });
+    }
+
+    private handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        this.props.onSubmit(this.state.meterParams);
+    }
+
+    private static filter(query: string, meter: IConstructionInfo, index: number) {
         return meter.className.indexOf(query) >= 0;
     }
 

@@ -5,7 +5,8 @@ import {ConfigurationViewer} from "./ConfigurationViewer";
 import {SimStatusControls} from "./SimStatusControls";
 import {WidthProvider} from "react-grid-layout";
 import * as ReactGridLayout from "react-grid-layout";
-import {AddMeterForm} from "./AddMeterForm";
+import {AddMeterForm, IConstructionParams} from "./AddMeterForm";
+import {AddMeterDialog} from "./AddMeterDialog";
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
@@ -58,11 +59,19 @@ export class SimulationInstanceView extends React.Component<any, any> {
                     </div>
                     <div key={"test"}>Test</div>
                     <div key={"form"}>
-                        <AddMeterForm simId={this.simId}/>
+                        <AddMeterDialog
+                            onSubmit={this.createMeter}
+                            simId={this.simId}
+                            model={this.modelTree}
+                        />
                     </div>
                 </GridLayout>
             );
         }
+    }
+
+    private createMeter = (params: IConstructionParams) => {
+
     }
 
 
