@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Button, Dialog} from "@blueprintjs/core";
-import {AddMeterForm, IConstructionInfo} from "./AddMeterForm";
+import {AddMeterForm, IConstructionInfo, IConstructionParams} from "./AddMeterForm";
 import {getAvailableMeters} from "../api/SimulationModel";
 
 interface IMeterDialogState {
@@ -10,7 +10,7 @@ interface IMeterDialogState {
 }
 
 interface IMeterDialogProps {
-    onSubmit: (constructionParams: any) => void;
+    onSubmit: (constructionParams: IConstructionParams) => void;
     simId: string;
     model: any;
 }
@@ -51,13 +51,18 @@ export class AddMeterDialog extends React.Component<IMeterDialogProps, IMeterDia
                         <AddMeterForm
                             meters={this.state.meterInfos}
                             model={this.props.model}
-                            onSubmit={this.props.onSubmit}
+                            onSubmit={this.onSubmit}
                         />
                     </div>
 
                 </Dialog>
             </div>
         );
+    }
+
+    private onSubmit = (params: IConstructionParams) => {
+        this.toggleDialog();
+        this.props.onSubmit(params);
     }
 
     private toggleDialog = () => this.setState({isOpen: !this.state.isOpen});

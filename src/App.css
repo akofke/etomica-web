@@ -1,10 +1,7 @@
 @import "~@blueprintjs/core/dist/blueprint.css";
 @import "~react-grid-layout/css/styles.css";
 @import "~react-resizable/css/styles.css";
-
-h1 {
-    color: red;
-}
+@import "~c3/c3.css";
 
 #configuration-viewer, .config-viewer-container {
     width: 100%;
@@ -30,7 +27,15 @@ h1 {
     padding-top: 0.5rem;
 }
 
-.popover-menu .pt-popover-content {
-    max-height: 500px;
-    overflow-y: auto;
+.pt-select-popover .pt-popover-content {
+    padding: 5px;
+}
+
+.pt-select-popover .pt-menu {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.meter-form {
+    margin-top: 1rem;
 }

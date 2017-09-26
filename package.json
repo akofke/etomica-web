@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/c3": "^0.4.44",
     "@types/react-grid-layout": "^0.14.3",
     "@types/react-router-dom": "^4.0.7",
     "@types/webpack": "^3.0.5",
@@ -36,6 +37,7 @@
     "@types/react-dom": "^15.5.1",
     "axios": "^0.16.2",
     "babylonjs": "^3.1.0-alpha1",
+    "c3": "^0.4.18",
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.6.1",

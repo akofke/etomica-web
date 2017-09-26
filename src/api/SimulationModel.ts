@@ -1,4 +1,5 @@
 import Axios from "axios";
+import {IConstructionParams} from "../components/AddMeterForm";
 
 export const createSimulationInstance = (className: string) => {
     return Axios.post("http://localhost:8080/simulations", {
@@ -29,3 +30,7 @@ export const treeifyModel = (model: any) => {
 export const getAvailableMeters = (simId: string) => {
     return Axios.get(`http://localhost:8080/simulations/${simId}/data/meters`);
 };
+
+export const addMeter = (params: IConstructionParams, simId: string) => {
+    return Axios.post(`http://localhost:8080/simulations/${simId}/data`, params);
+}
