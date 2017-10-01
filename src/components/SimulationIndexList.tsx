@@ -14,7 +14,7 @@ const cardList = (simClassInfo: any[]) => (
         <Link to={`/create/${classInfo.className}`}>
             <div className="pt-card pt-interactive sim-class-card">
                 <h6>{classInfo.className}</h6>
-                <p dangerouslySetInnerHTML={javadocHTML(classInfo.javadoc)}></p>
+                <p dangerouslySetInnerHTML={javadocHTML(classInfo.javadoc)}/>
             </div>
         </Link>
     ))

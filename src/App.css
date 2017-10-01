@@ -21,6 +21,7 @@
 
 .sim-class-card {
     margin: 0.5rem;
+    max-width: 500px;
 }
 
 .sim-view-container, .create-instance-container {
