@@ -7,6 +7,7 @@ import {WidthProvider} from "react-grid-layout";
 import {IConstructionParams} from "./AddMeterForm";
 import {AddMeterDialog} from "./AddMeterDialog";
 import {MeterGraph} from "./MeterGraph";
+import {TreeModelView} from "./TreeModelView";
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
@@ -81,6 +82,13 @@ export class SimulationInstanceView extends React.Component<any, ISimInstanceVie
                         />
                     </div>
                     {this.renderMeterGraphs()}
+                    <div
+                        key={"tree"}
+                        data-grid={{x: 0, y: Infinity, w: 8, h: 8}}
+                    >
+                        <TreeModelView treeModel={this.model}/>
+
+                    </div>
                 </GridLayout>
             );
         }

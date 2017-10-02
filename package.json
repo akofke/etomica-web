@@ -42,6 +42,7 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.0.0",
     "react-grid-layout": "^0.15.2",
+    "react-json-inspector": "^7.1.0",
     "react-router-dom": "^4.2.2"
   }
 }
