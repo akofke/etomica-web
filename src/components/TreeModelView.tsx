@@ -1,5 +1,5 @@
 import * as React from "react";
-const Inspector = require("react-json-inspector");
+import JSONTree from "react-json-tree";
 
 export class TreeModelView extends React.Component<any, any> {
     private simId: string;
@@ -15,13 +15,8 @@ export class TreeModelView extends React.Component<any, any> {
 
     public render() {
         return (
-            <Inspector data={this.state.treeModel[0]} interactiveLabel={this.renderInteractiveLabel}/>
+            <JSONTree data={this.props.treeModel[0]}/>
         );
     }
 
-    private renderInteractiveLabel = (value: any, originalValue: any, isKey: boolean, keypath: any) => {
-        console.log(value);
-        console.log(keypath);
-        return <div></div>;
-    }
 }

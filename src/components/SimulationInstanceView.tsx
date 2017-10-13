@@ -36,6 +36,7 @@ export class SimulationInstanceView extends React.Component<any, ISimInstanceVie
 
         this.layout = [
             {i: "config-viewer", x: 0, y: 0, w: 6, h: 3},
+            {i: "tree", x: 6, y: 0, w: 6, h: 5, static: true},
             {i: "form", x: 0, y: 0, w: 2, h: 3},
         ]
     }
@@ -84,7 +85,6 @@ export class SimulationInstanceView extends React.Component<any, ISimInstanceVie
                     {this.renderMeterGraphs()}
                     <div
                         key={"tree"}
-                        data-grid={{x: 0, y: Infinity, w: 8, h: 8}}
                     >
                         <TreeModelView treeModel={this.model}/>
 

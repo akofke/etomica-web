@@ -37,8 +37,9 @@ export class ConfigurationViewer extends React.Component<any, any> {
         this.simDisplay.addModel(this.modelTree);
         const socket = new WebSocket(`ws://localhost:8080/simulations/${this.id}/configuration`);
         socket.addEventListener("message", (event) => {
-            console.log(event);
-            this.simDisplay.updatePositions(JSON.parse(event.data));
+            const update = JSON.parse(event.data);
+            this.simDisplay.updatePositions(update.coordinates);
+            this.simDisplay.updateBoundary(update.boxBoundaries);
         });
     }
 

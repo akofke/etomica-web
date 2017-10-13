@@ -29,39 +29,64 @@ export class Simulation2D extends SimulationDisplay {
         });
     }
 
-    public addModel(model: any): void {
+    public addModel(model: any) {
         this.addAtomTypes(model);
+        const boxes: any[] = model["#box"];
+        boxes.forEach((box, boxIndex) => {
 
-        const atoms: any[] = model["#box"][0]["#leafList"];
-        atoms.forEach((atom, i, arr) => {
-            const atomMesh: BABYLON.Mesh = this.atomTypes[atom["#type"].index].baseMesh;
-            const atomInstance = atomMesh.createInstance(`atom${i}`);
-            const pos = atom.position;
-            atomInstance.position.x = pos[0];
-            atomInstance.position.y = pos[1];
-            atomInstance.position.z = 0
-            this.atomInstances.push(atomInstance);
+            // Create an invisible "parent" mesh for the box that can control the visibility of everything in the box
+            const boxMesh: BABYLON.AbstractMesh = new BABYLON.AbstractMesh("box", this.scene);
+            boxMesh.isVisible = false; // Don't render this abstract mesh
+
+            this.boxEdgeMeshes[boxIndex] = [];
+            const edges: any[] = box["#boundary"]["#shape"]["#edges"];
+            edges.forEach((edge, edgeIndex) => {
+                const edgeVertices: any[] = edge["#vertices"];
+                const edgeMesh = BABYLON.Mesh.CreateLines(
+                    `box${boxIndex}-edge${edgeIndex}`,
+                    edgeVertices.map((v) => new BABYLON.Vector3(v[0], v[1], 0)),
+                    this.scene
+                );
+                edgeMesh.material.alpha = 0.0;
+                edgeMesh.enableEdgesRendering();
+                edgeMesh.edgesWidth = 4.0;
+                edgeMesh.edgesColor = new BABYLON.Color4(0, 0, 1, 1);
+                this.boxEdgeMeshes[boxIndex].push(edgeMesh);
+                edgeMesh.parent = boxMesh;
+            });
+
+            this.atomInstances[boxIndex] = [];
+            const atoms: any[] = box["#leafList"];
+            atoms.forEach((atom, i) => {
+                const atomMesh: BABYLON.Mesh = this.atomTypes[atom["#type"].index].baseMesh;
+                const atomInstance = atomMesh.createInstance(`box${boxIndex}-atom${i}`);
+                const pos = atom.position;
+                atomInstance.position.x = pos[0];
+                atomInstance.position.y = pos[1];
+                atomInstance.position.z = 0;
+                this.atomInstances[boxIndex].push(atomInstance);
+                atomInstance.parent = boxMesh;
+            });
+            console.log(boxMesh);
+
         });
 
-        const edges: any[] = model["#box"][0]["#boundary"]["#shape"]["#edges"];
-        edges.forEach((edge) => {
-            const edgeVertices: any[] = edge["#vertices"];
-            const edgeMesh = BABYLON.Mesh.CreateLines("box", edgeVertices.map((v) => new BABYLON.Vector3(v[0], v[1], 0)), this.scene);
-            edgeMesh.material.alpha = 0.0;
-            edgeMesh.enableEdgesRendering();
-            edgeMesh.edgesWidth = 4.0;
-            edgeMesh.edgesColor = new BABYLON.Color4(0, 0, 1, 1);
-            this.edgeMeshes.push(edgeMesh);
-        });
-        console.log(this.scene);
+        this.setVisibleBox(0);
+
     }
-    public updatePositions(coords: number[][][]): void {
-        const box = coords[0];
-        box.forEach((coord, i, arr) => {
-            const mesh = this.atomInstances[i];
-            mesh.position.x = coord[0];
-            mesh.position.y = coord[1];
-        })
+
+    public updatePositions(coords: number[][][]) {
+        const numBoxes = coords.length;
+        for(let boxIndex = 0; boxIndex < numBoxes; boxIndex++) {
+            const box = coords[boxIndex];
+            const numAtoms = box.length;
+            for(let atomIndex = 0; atomIndex < numAtoms; atomIndex++) {
+                const mesh = this.atomInstances[boxIndex][atomIndex];
+                const coord = box[atomIndex];
+                mesh.position.x = coord[0];
+                mesh.position.y = coord[1];
+            }
+        }
     }
 
     private addAtomTypes(model: any) {
@@ -82,6 +107,23 @@ export class Simulation2D extends SimulationDisplay {
                 baseMesh.material = baseMaterial;
 
                 this.atomTypes[atomType.index] = {baseMesh}
+            });
+        });
+    }
+
+    public updateBoundary(boxBoundaries: any[]) {
+        boxBoundaries.forEach((boundary, boxIndex) => {
+            const edges: any[] = boundary.shape.edges;
+            edges.forEach((edgeVertices, edgeIndex) => {
+                const edgeMesh = this.boxEdgeMeshes[boxIndex][edgeIndex];
+                BABYLON.MeshBuilder.CreateLines(
+                    edgeMesh.name,
+                    {
+                        points: edgeVertices.map((v: any) => new BABYLON.Vector3(v[0], v[1], 0)),
+                        instance: edgeMesh as BABYLON.LinesMesh,
+                    },
+                    this.scene
+                );
             });
         });
     }
