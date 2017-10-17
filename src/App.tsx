@@ -5,7 +5,7 @@ import "./App.css";
 import {ConfigurationViewer} from "./components/ConfigurationViewer";
 import {Navbar} from "./components/Navbar";
 import {Route} from "react-router";
-import {SimulationIndexView} from "./components/SimulationIndexView";
+import {SimulationIndexView} from "./components/simulationIndex/SimulationIndexView";
 import {CreateSimulationInstance} from "./components/CreateSimulationInstance";
 import {SimulationInstanceView} from "./components/SimulationInstanceView";
 

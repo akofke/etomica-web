@@ -130,9 +130,3 @@ export class Simulation3D extends SimulationDisplay {
         });
     }
 }
-
-interface IAtomTypes {
-    [atomTypeIndex: number]: {
-        baseMesh: BABYLON.Mesh
-    }
-}

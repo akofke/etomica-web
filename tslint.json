@@ -8,7 +8,9 @@
     "rules": {
         "no-trailing-whitespace": false,
         "object-literal-sort-keys": false,
-        "trailing-comma": false
+        "trailing-comma": false,
+        "interface-name": false,
+        "no-console": false
     },
     "rulesDirectory": []
 }

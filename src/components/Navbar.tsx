@@ -4,7 +4,7 @@ import {SimStatusControls} from "./SimStatusControls";
 
 export const Navbar = () => {
     return(
-        <nav className="pt-navbar">
+        <nav className="pt-navbar" id="navbar">
             <div className="pt-navbar-group pt-align-left">
                 <div className="pt-navbar-heading">Etomica</div>
             </div>
