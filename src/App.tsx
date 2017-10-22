@@ -7,7 +7,7 @@ import {Navbar} from "./components/Navbar";
 import {Route} from "react-router";
 import {SimulationIndexView} from "./components/simulationIndex/SimulationIndexView";
 import {CreateSimulationInstance} from "./components/CreateSimulationInstance";
-import {SimulationInstanceView} from "./components/SimulationInstanceView";
+import {SimulationInstanceView} from "./components/simulationInstance/SimulationInstanceView";
 
 export const App = () => (
     <Router>

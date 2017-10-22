@@ -22,7 +22,7 @@ export class SimStatusControls extends React.Component<any, any> {
 
     public render() {
         return (
-            <div className="pt-button-group pt-large">
+            <div className="pt-button-group pt-large pt-fill">
                 {this.getStatusButton()}
                 <Button iconName="refresh" intent={Intent.WARNING} onClick={this.handleResetClick}>Reset</Button>
             </div>
