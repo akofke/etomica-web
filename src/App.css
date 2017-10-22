@@ -18,17 +18,6 @@
     background: gainsboro;
 }
 
-.sim-class-card-list {
-    padding-top: 0.5rem;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.sim-class-card {
-    margin: 0.5rem;
-    max-width: 500px;
-}
-
 .sim-view-container, .create-instance-container {
     padding-top: 0.5rem;
 }
@@ -44,19 +33,4 @@
 
 .meter-form {
     margin-top: 1rem;
-}
-
-.sim-index-container {
-    display: flex;
-    align-items: stretch;
-}
-
-.sim-index-tree {
-}
-
-.sim-info-card {
-}
-
-.sim-search {
-    margin-bottom: 0.5rem;
 }

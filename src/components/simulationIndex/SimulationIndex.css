@@ -1,0 +1,17 @@
+.sim-index-container {
+    display: flex;
+    align-items: stretch;
+}
+
+.sim-index-tree {
+    flex: 0 0 30vw;
+    margin-right: 1rem;
+}
+
+.sim-info-card {
+    flex: 1;
+}
+
+.sim-search {
+    margin-bottom: 0.5rem;
+}

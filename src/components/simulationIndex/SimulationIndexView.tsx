@@ -4,6 +4,8 @@ import {Intent, NonIdealState, Spinner} from "@blueprintjs/core";
 import {SimulationIndexTree} from "./SimulationIndexTree";
 import {SimInfoCard} from "./SimInfoCard";
 
+import "./SimulationIndex.css";
+
 export interface SimClassInfo {
     className: string;
     javadoc: string;
