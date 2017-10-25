@@ -5,5 +5,5 @@ import { App } from "./App";
 
 ReactDOM.render(
         <App/>,
-    document.getElementById("example"),
+    document.getElementById("App"),
 );
