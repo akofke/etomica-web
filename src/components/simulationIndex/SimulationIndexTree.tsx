@@ -84,6 +84,7 @@ export class SimulationIndexTree extends React.Component<ISimulationIndexTreePro
             childNodes.push({
                 label: classInfo.className.split(".").pop(),
                 iconName: "graph",
+                className: this.props.searchResults.some((v => v === classInfo.className)) ? "tree-search-match" : "",
                 id
             } as ITreeNode);
             this.nodeInfoMap[id] = classInfo;

@@ -1,11 +1,15 @@
 .sim-index-container {
     display: flex;
     align-items: stretch;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
 
 .sim-index-tree {
     flex: 0 0 30vw;
     margin-right: 1rem;
+    overflow: auto;
 }
 
 .sim-info-card {
@@ -14,4 +18,12 @@
 
 .sim-search {
     margin-bottom: 0.5rem;
+}
+
+.tree-search-match{
+    background: #a8d1ff;
+}
+
+.pt-dark .tree-search-match {
+    background: cadetblue;
 }

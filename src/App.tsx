@@ -8,16 +8,22 @@ import {SimulationIndexView} from "./components/simulationIndex/SimulationIndexV
 import {CreateSimulationInstance} from "./components/CreateSimulationInstance";
 import {SimulationInstanceView} from "./components/simulationInstance/SimulationInstanceView";
 import {FocusStyleManager} from "@blueprintjs/core";
+import {observer} from "mobx-react";
+import uiStore from "./stores/UIStore";
+import DevTools from "mobx-react-devtools";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
-export const App = () => (
+export const App = observer(() => (
     <Router>
-        <div>
+        <div id="App-main" className={uiStore.isDarkTheme ? "pt-dark" : ""}>
             <Navbar/>
-            <Route exact={true} path={"/"} component={SimulationIndexView}/>
-            <Route path={"/create/:simClassName"} component={CreateSimulationInstance}/>
-            <Route path={"/view/:simId"} component={SimulationInstanceView}/>
+            <div id="App-content">
+                <Route exact={true} path={"/"} component={SimulationIndexView}/>
+                <Route path={"/create/:simClassName"} component={CreateSimulationInstance}/>
+                <Route path={"/view/:simId"} component={SimulationInstanceView}/>
+            </div>
+            <DevTools/>
         </div>
     </Router>
-);
+));

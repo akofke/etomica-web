@@ -1,7 +1,7 @@
 import * as React from "react";
 import {addMeter, fetchModel, treeifyModel} from "../../api/SimulationModel";
 import {Intent, NonIdealState, Spinner, Tab2, Tabs2} from "@blueprintjs/core";
-import {ConfigurationViewer} from "../ConfigurationViewer";
+import {ConfigurationViewer} from "./configuration/ConfigurationView";
 import * as ReactGridLayout from "react-grid-layout";
 import {WidthProvider} from "react-grid-layout";
 import {IConstructionParams} from "../AddMeterForm";

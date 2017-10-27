@@ -1,9 +1,10 @@
 import * as React from "react";
-import {Simulation3D} from "../lib/Simulation3D";
-import {SimulationDisplay} from "../lib/SimulationDisplay";
-import {createSimulationInstance, fetchModel, treeifyModel} from "../api/SimulationModel";
+import {Simulation3D} from "../../../lib/Simulation3D";
+import {SimulationDisplay} from "../../../lib/SimulationDisplay";
 import { ContextMenuTarget, Menu, MenuItem } from "@blueprintjs/core";
-import { Simulation2D } from "../lib/Simulation2D";
+import { Simulation2D } from "../../../lib/Simulation2D";
+
+import "./Configuration.css";
 
 @ContextMenuTarget
 export class ConfigurationViewer extends React.Component<any, any> {
@@ -20,8 +21,8 @@ export class ConfigurationViewer extends React.Component<any, any> {
 
     public render() {
         return (
-            <div className={"config-viewer-container"}>
-                <canvas id={"configuration-viewer"} ref={this.setCanvasRef}>No Canvas</canvas>
+            <div className={"Config-container"}>
+                <canvas id={"Config-canvas"} ref={this.setCanvasRef}>No Canvas</canvas>
             </div>
         );
     }

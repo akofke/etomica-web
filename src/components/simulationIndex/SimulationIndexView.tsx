@@ -46,7 +46,6 @@ export class SimulationIndexView extends React.Component<any, ISimulationIndexVi
         if (!this.state.loaded) {
             return (
                 <NonIdealState
-                    className={"sim-view-container"}
                     title={"Loading Available Simulations..."}
                     visual={<Spinner className="pt-large" intent={Intent.PRIMARY}/>}
                 />

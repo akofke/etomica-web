@@ -84,22 +84,24 @@ export class AddMeterForm extends React.Component<IMeterFormProps, IMeterFormSta
             return (
                 <form onSubmit={this.handleSubmit} className="meter-form">
                     <h5>Constructor Parameters</h5>
-                    {this.renderConstructorParamsInputs(this.state.selectedMeter)}
+                    {this.renderConstructorParamsInputs()}
+
                     <h5>Properties</h5>
                     {this.renderPropertiesInputs()}
+
                     <input type="submit" value="Submit" className="pt-button pt-intent-success"/>
                 </form>
             );
         }
     }
 
-    private renderConstructorParamsInputs = (info: IConstructionInfo) => (
-        info.constructorParamTypes.map((paramClass, paramIdx) => (
+    private renderConstructorParamsInputs = () => (
+        this.state.selectedMeter.constructorParamTypes.map((paramClass, paramIdx) => (
             <label className="pt-label">
                 {paramClass}
                 <div className="pt-select">
                     <select name={paramIdx.toString()} onChange={this.onParamsChange}>
-                        {info.classOptions[paramClass].map((id, idx) => (
+                        {this.state.selectedMeter.classOptions[paramClass].map((id, idx) => (
                             <option value={id}>{this.props.model[id].class}</option>
                         ))}
                     </select>

@@ -1,0 +1,10 @@
+#Config-canvas, .Config-container {
+    width: 100%;
+    height: 100%;
+}
+
+.Config-container {
+    padding: 10px;
+    background: gainsboro;
+}
+
