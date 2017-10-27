@@ -1,0 +1,37 @@
+import Axios, {AxiosInstance} from "axios";
+import {API_URL} from "./";
+
+// TODO: use webpack define plugin
+
+export class SimulationRemote {
+    public readonly simId: string;
+    private readonly axios: AxiosInstance;
+    private readonly boxSocket: WebSocket;
+
+    constructor(simId: string) {
+        this.simId = simId;
+        this.axios = Axios.create({
+            baseURL: `${API_URL}/simulations/${simId}`
+        });
+
+        this.boxSocket = new WebSocket(`ws://${API_URL}/simulations/${simId}/configuration`);
+    }
+
+    public fetchModel() {
+        return this.axios.get("");
+    }
+
+    public fetchAvailableMeters() {
+        return this.axios.get("/data/meters");
+    }
+
+    public start() {
+        return this.axios.put("/status", {status: "start"});
+    }
+
+    public pause() {
+        return this.axios.put("/status", {status: "pause"});
+    }
+
+
+}
