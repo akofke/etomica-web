@@ -3,8 +3,10 @@ import Axios from "axios";
 import {Intent, NonIdealState, Spinner} from "@blueprintjs/core";
 import {SimulationIndexTree} from "./SimulationIndexTree";
 import {SimInfoCard} from "./SimInfoCard";
+import { simulationIndexStore } from "../../stores/SimulationIndexStore";
 
 import "./SimulationIndex.css";
+import { observer } from "mobx-react";
 
 export interface SimClassInfo {
     className: string;
@@ -16,34 +18,15 @@ export interface PackageHierarchy {
     classes: SimClassInfo[];
 }
 
-interface ISimulationIndexViewState {
-    loaded: boolean;
-    classInfos: SimClassInfo[];
-    searchResults: string[];
-    searchValue: string;
-    selectedSim?: SimClassInfo;
-}
-
-export class SimulationIndexView extends React.Component<any, ISimulationIndexViewState> {
-
-    constructor() {
-        super();
-        this.state = {
-            loaded: false,
-            classInfos: [],
-            searchResults: [],
-            searchValue: ""
-        };
-    }
+@observer
+export class SimulationIndexView extends React.Component<any, any> {
 
     public componentDidMount() {
-        Axios.get(`http://localhost:8080/simulations`).then((res) => {
-            this.setState({classInfos: res.data, loaded: true});
-        });
+        simulationIndexStore.fetchSimulations();
     }
 
     public render() {
-        if (!this.state.loaded) {
+        if (!simulationIndexStore.loadedClasses) {
             return (
                 <NonIdealState
                     title={"Loading Available Simulations..."}
@@ -51,29 +34,27 @@ export class SimulationIndexView extends React.Component<any, ISimulationIndexVi
                 />
             );
         } else {
-            const classInfos = this.state.classInfos;
-            const classes: PackageHierarchy = {subpackages: {}, classes: []};
-            classInfos.forEach((classInfo) => {
-                const classNameComponents = classInfo.className.split(".");
-                addToPackageHierarchy(classes, classNameComponents.slice(0, -1), classInfo);
-            });
-            console.log(classes);
             return (
                 <div className="sim-index-container">
                     <div className="pt-card pt-elevation-1 sim-index-tree">
                         <div className="pt-input-group sim-search">
                             <span className="pt-icon pt-icon-search"/>
-                            <input type="search" className="pt-input" placeholder="Filter simulations"
-                                   onChange={this.handleSearchChange}/>
+                            <input
+                                type="search"
+                                className="pt-input"
+                                placeholder="Filter simulations"
+                                value={simulationIndexStore.searchQuery}
+                                onChange={this.handleSearchChange}
+                            />
                         </div>
                         <SimulationIndexTree
-                            classTree={classes}
-                            searchResults={this.state.searchResults}
+                            searchResults={simulationIndexStore.searchResults}
+                            classTree={simulationIndexStore.simPackageHierarchy}
                             onSelect={this.handleSelect}
                         />
                     </div>
 
-                    <SimInfoCard simInfo={this.state.selectedSim}/>
+                    <SimInfoCard simInfo={simulationIndexStore.selectedClass}/>
                 </div>
             );
         }
@@ -81,34 +62,11 @@ export class SimulationIndexView extends React.Component<any, ISimulationIndexVi
 
     private handleSearchChange = (event: React.FormEvent<any>) => {
         const value: string = event.currentTarget.value;
-        const results: string[] = value.length < 3 ? [] :
-            this.state.classInfos.filter(
-                (classInfo) => classInfo.className.indexOf(value) > -1 || classInfo.javadoc.indexOf(value) > -1
-            ).map((classInfo) => classInfo.className);
-
-        this.setState({
-            searchValue: value,
-            searchResults: results
-        });
-    };
+        simulationIndexStore.setSearchQuery(value);
+    }
 
     private handleSelect = (selected: SimClassInfo) => {
-        this.setState({
-            selectedSim: selected
-        });
+        simulationIndexStore.selectedClass = selected;
     }
 
 }
-
-const addToPackageHierarchy = (hierarchy: PackageHierarchy, packagePath: string[], classInfo: SimClassInfo) => {
-    const lastKeyIndex = packagePath.length;
-    for (let i = 0; i < lastKeyIndex; ++i) {
-        const key = packagePath[i];
-        if (!(key in hierarchy.subpackages)) {
-            hierarchy.subpackages[key] = {subpackages: {}, classes: []};
-        }
-        hierarchy = hierarchy.subpackages[key];
-    }
-
-    hierarchy.classes.push(classInfo);
-};

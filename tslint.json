@@ -1,5 +1,5 @@
 {
-    "defaultSeverity": "error",
+    "defaultSeverity": "warning",
     "extends": [
         "tslint:recommended",
         "tslint-react"
@@ -10,7 +10,8 @@
         "object-literal-sort-keys": false,
         "trailing-comma": false,
         "interface-name": false,
-        "no-console": false
+        "no-console": false,
+        "ordered-imports": false
     },
     "rulesDirectory": []
 }
