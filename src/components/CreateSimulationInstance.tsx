@@ -2,7 +2,10 @@ import * as React from "react";
 import {Intent, NonIdealState, Spinner} from "@blueprintjs/core";
 import {Redirect} from "react-router";
 import {createSimulationInstance} from "../api/SimulationModel";
+import {simulationStore} from "../stores/SimulationStore";
+import {observer} from "mobx-react";
 
+@observer
 export class CreateSimulationInstance extends React.Component<any, any> {
     private simClassName: any;
 
@@ -26,7 +29,7 @@ export class CreateSimulationInstance extends React.Component<any, any> {
     }
 
     public render() {
-        if (this.state.loading) {
+        if (simulationStore.isCreating) {
             return (
                 <NonIdealState
                     title={"Creating Simulation..."}

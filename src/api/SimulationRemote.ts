@@ -1,12 +1,12 @@
 import Axios, {AxiosInstance} from "axios";
-import {API_URL} from "./";
+import {API_URL, WS_URL} from "./";
 
 // TODO: use webpack define plugin
 
 export class SimulationRemote {
     public readonly simId: string;
+    public readonly boxSocket: WebSocket;
     private readonly axios: AxiosInstance;
-    private readonly boxSocket: WebSocket;
 
     constructor(simId: string) {
         this.simId = simId;
@@ -14,11 +14,15 @@ export class SimulationRemote {
             baseURL: `${API_URL}/simulations/${simId}`
         });
 
-        this.boxSocket = new WebSocket(`ws://${API_URL}/simulations/${simId}/configuration`);
+        this.boxSocket = new WebSocket(`${WS_URL}/simulations/${simId}/configuration`);
     }
 
     public fetchModel() {
         return this.axios.get("");
+    }
+
+    public fetchDataStreams() {
+        return this.axios.get("/data");
     }
 
     public fetchAvailableMeters() {
@@ -26,12 +30,11 @@ export class SimulationRemote {
     }
 
     public start() {
-        return this.axios.put("/status", {status: "start"});
+        return this.axios.put("/control", {status: "start"});
     }
 
     public pause() {
-        return this.axios.put("/status", {status: "pause"});
+        return this.axios.put("/control", {status: "pause"});
     }
-
 
 }

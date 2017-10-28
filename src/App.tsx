@@ -11,6 +11,7 @@ import {FocusStyleManager} from "@blueprintjs/core";
 import {observer} from "mobx-react";
 import uiStore from "./stores/UIStore";
 import DevTools from "mobx-react-devtools";
+import {SimulationInstancePage} from "./components/simulationInstance/SimulationInstancePage";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -21,7 +22,7 @@ export const App = observer(() => (
             <div id="App-content">
                 <Route exact={true} path={"/"} component={SimulationIndexView}/>
                 <Route path={"/create/:simClassName"} component={CreateSimulationInstance}/>
-                <Route path={"/view/:simId"} component={SimulationInstanceView}/>
+                <Route path={"/view/:simId"} component={SimulationInstancePage}/>
             </div>
             <DevTools/>
         </div>

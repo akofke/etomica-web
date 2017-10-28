@@ -5,19 +5,16 @@ import { ContextMenuTarget, Menu, MenuItem } from "@blueprintjs/core";
 import { Simulation2D } from "../../../lib/Simulation2D";
 
 import "./Configuration.css";
+import {simulationStore} from "../../../stores/SimulationStore";
+import {observer} from "mobx-react";
 
 @ContextMenuTarget
-export class ConfigurationViewer extends React.Component<any, any> {
+@observer
+export class ConfigurationView extends React.Component<any, any> {
     private element: HTMLCanvasElement;
     private simDisplay: SimulationDisplay;
-    private id: string;
-    private modelTree: any;
 
-    constructor(props: any) {
-        super(props);
-        this.modelTree = props.modelTree;
-        this.id = props.id;
-    }
+    private readonly sim = simulationStore.sim;
 
     public render() {
         return (
@@ -28,16 +25,16 @@ export class ConfigurationViewer extends React.Component<any, any> {
     }
 
     public componentDidMount() {
-        const space = this.getSpace(this.modelTree);
+        const space = getSpace(this.sim.model);
         if(space === 3) {
             this.simDisplay = new Simulation3D(this.element);
         } else if(space === 2) {
             this.simDisplay = new Simulation2D(this.element);
         }
 
-        this.simDisplay.addModel(this.modelTree);
-        const socket = new WebSocket(`ws://localhost:8080/simulations/${this.id}/configuration`);
-        socket.addEventListener("message", (event) => {
+        this.simDisplay.addModel(this.sim.model);
+        this.sim.simRemote.boxSocket.addEventListener("message", (event) => {
+            console.log(event);
             const update = JSON.parse(event.data);
             this.simDisplay.updatePositions(update.coordinates);
             this.simDisplay.updateBoundary(update.boxBoundaries);
@@ -62,7 +59,8 @@ export class ConfigurationViewer extends React.Component<any, any> {
         this.element = canvas;
     }
 
-    private getSpace(model: any): number {
-        return model["#space"]["d"];
-    }
+}
+
+const getSpace = (model: any): number => {
+    return model["#space"]["d"];
 }
