@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 
+require("dotenv").load();
+
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -55,6 +57,13 @@ module.exports = {
             openAnalyzer: false
         }),
         new CaseSensitivePathsPlugin(),
+
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+                'API_URL': JSON.stringify(process.env.API_URL || "http://localhost:8080")
+            }
+        })
     ],
 
     devServer: {

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --display-optimization-bailout",
-    "start": "webpack-dev-server"
+    "start": "cross-env NODE_ENV=development webpack-dev-server"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,9 @@
     "@types/webpack": "^3.0.14",
     "awesome-typescript-loader": "^3.2.2",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
+    "cross-env": "^5.1.1",
     "css-loader": "^0.28.4",
+    "dotenv": "^4.0.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
     "mobx-react-devtools": "^4.2.15",

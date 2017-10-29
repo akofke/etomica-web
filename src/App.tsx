@@ -14,6 +14,7 @@ import DevTools from "mobx-react-devtools";
 import {SimulationInstancePage} from "./components/simulationInstance/SimulationInstancePage";
 
 FocusStyleManager.onlyShowFocusOnTabs();
+declare let process: any;
 
 export const App = observer(() => (
     <Router>
@@ -24,7 +25,7 @@ export const App = observer(() => (
                 <Route path={"/create/:simClassName"} component={CreateSimulationInstance}/>
                 <Route path={"/view/:simId"} component={SimulationInstancePage}/>
             </div>
-            <DevTools/>
+            {process.env.NODE_ENV === "development" ? <DevTools/> : null}
         </div>
     </Router>
 ));
