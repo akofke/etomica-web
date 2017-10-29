@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
 
 require("dotenv").load();
@@ -14,8 +13,6 @@ module.exports = {
         filename: "[name].bundle.js",
         path: path.resolve(process.cwd(), 'dist')
     },
-
-    devtool: "cheap-module-eval-source-map",
 
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".json"]
@@ -65,12 +62,4 @@ module.exports = {
             }
         })
     ],
-
-    devServer: {
-        contentBase: path.join(process.cwd(), 'public'),
-        port: 9000,
-        historyApiFallback: {
-            disableDotRule: true,
-        },
-    }
 };
