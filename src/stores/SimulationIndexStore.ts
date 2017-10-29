@@ -5,6 +5,7 @@ import { SimulationIndexRemote } from "../api/SimulationIndexRemote";
 
 export class SimulationIndexStore {
     @observable public loadedClasses: boolean = false;
+    @observable public error = false;
     @observable.shallow public classInfos: SimClassInfo[] = [];
 
     @observable public searchQuery: string = "";
@@ -12,12 +13,16 @@ export class SimulationIndexStore {
 
     @action
     public fetchSimulations() {
+        this.error = false;
         SimulationIndexRemote.fetchSimulationClasses().then((response) => {
             runInAction(() => {
                 this.classInfos = response.data;
                 this.loadedClasses = true;
             });
-        });
+        }).catch((err) => {
+            console.log(err);
+            runInAction(() => { this.error = true; });
+        })
     }
 
     @action

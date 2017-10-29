@@ -1,6 +1,6 @@
 import * as React from "react";
 import Axios from "axios";
-import {Intent, NonIdealState, Spinner} from "@blueprintjs/core";
+import {Button, Intent, NonIdealState, Spinner} from "@blueprintjs/core";
 import {SimulationIndexTree} from "./SimulationIndexTree";
 import {SimInfoCard} from "./SimInfoCard";
 import { simulationIndexStore } from "../../stores/SimulationIndexStore";
@@ -26,10 +26,20 @@ export class SimulationIndexView extends React.Component<any, any> {
     }
 
     public render() {
+        if (simulationIndexStore.error) {
+            return (
+                <NonIdealState
+                    visual={"error"}
+                    title="Error loading simulations"
+                    description={"Make sure the server is started"}
+                    action={<Button iconName="refresh" onClick={refresh}>Retry</Button>}
+                />
+            );
+        }
         if (!simulationIndexStore.loadedClasses) {
             return (
                 <NonIdealState
-                    title={"Loading Available Simulations..."}
+                    title={"Loading available simulations..."}
                     visual={<Spinner className="pt-large" intent={Intent.PRIMARY}/>}
                 />
             );
@@ -69,4 +79,8 @@ export class SimulationIndexView extends React.Component<any, any> {
         simulationIndexStore.selectedClass = selected;
     }
 
+}
+
+const refresh = () => {
+    simulationIndexStore.fetchSimulations();
 }
