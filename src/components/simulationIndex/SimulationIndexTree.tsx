@@ -73,6 +73,9 @@ export class SimulationIndexTree extends React.Component<ISimulationIndexTreePro
                 nodes: this.state.nodes
             });
             this.props.onSelect(this.nodeInfoMap[nodeData.id as number]);
+        } else {
+            nodeData.isExpanded = !nodeData.isExpanded;
+            this.setState(this.state);
         }
 
     }

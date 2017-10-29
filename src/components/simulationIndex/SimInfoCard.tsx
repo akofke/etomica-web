@@ -17,6 +17,7 @@ export const SimInfoCard = withRouter(observer(({history}: any) => {
                 <p dangerouslySetInnerHTML={javadocHTML(simInfo.javadoc)}/>
                 <Button
                     iconName={"build"}
+                    className={"pt-large"}
                     intent={Intent.SUCCESS}
                     loading={simulationStore.isCreating}
                     text="Create Simulation"
