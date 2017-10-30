@@ -1,10 +1,13 @@
 
 import {SimulationRemote} from "../api/SimulationRemote";
-import {action, computed, observable, runInAction} from "mobx";
+import {action, computed, IObservableArray, observable, runInAction} from "mobx";
 import {createSimulationInstance, SimulationConstructor} from "../api/SimulationsRemote";
 import {History} from "history";
 import uiStore from "./UIStore";
 import {Intent} from "@blueprintjs/core";
+import {MeterRemote} from "../api/MeterRemote";
+import {DataStream} from "../models/DataStream";
+import {ObservableArray} from "mobx/lib/types/observablearray";
 
 export class SimulationStore {
     @observable.ref public sim?: SimulationInstance;
@@ -50,6 +53,8 @@ export class SimulationInstance {
     @observable.ref public rawModel: {[id: number]: any};
     @observable public status: ControlStatus = "paused";
     @observable public isSyncing: boolean = false;
+
+    public dataStreams: IObservableArray<DataStream> = observable([]);
 
     constructor(simId: string) {
         this.simId = simId;
@@ -116,7 +121,16 @@ export class SimulationInstance {
                 runInAction(() => this.loadingStatus = "error");
             }
         });
+    }
 
+    @action public fetchDataStreams() {
+        this.simRemote.fetchDataStreams().then((res) => {
+            runInAction(() => {
+                this.dataStreams.replace(res.data.map((dataId: string) => {
+                    return new DataStream(dataId, this);
+                }));
+            });
+        });
     }
 
     @action public setModel(newRawModel: any) {

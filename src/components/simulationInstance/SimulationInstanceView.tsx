@@ -4,16 +4,20 @@ import {Intent, NonIdealState, Spinner, Tab2, Tabs2} from "@blueprintjs/core";
 import {ConfigurationView} from "./configuration/ConfigurationView";
 import {IConstructionParams} from "../AddMeterForm";
 import {AddMeterDialog} from "../AddMeterDialog";
-import {MeterGraph} from "../MeterGraph";
 import {TreeModelView} from "../TreeModelView";
 import {InstanceSidebar} from "./InstanceSidebar";
 
 import "./SimulationInstance.css";
 import {simulationStore} from "../../stores/SimulationStore";
+import {DataGraphsView} from "./data/DataGraphsView";
 
 
 export class SimulationInstanceView extends React.Component<any, any> {
     private readonly sim = simulationStore.sim;
+
+    public componentDidMount() {
+        this.sim.fetchDataStreams();
+    }
 
     public render() {
             return (
@@ -25,7 +29,7 @@ export class SimulationInstanceView extends React.Component<any, any> {
                         >
                             <Tab2 id="configuration" title="Configuration" panel={<ConfigurationView />}/>
 
-                            <Tab2 id="meters" title="Meters"></Tab2>
+                            <Tab2 id="meters" title="Meters" panel={<DataGraphsView/>}/>
 
                         </Tabs2>
                     </main>

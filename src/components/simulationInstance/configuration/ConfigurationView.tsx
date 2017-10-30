@@ -34,7 +34,7 @@ export class ConfigurationView extends React.Component<any, any> {
 
         this.simDisplay.addModel(this.sim.model);
         this.sim.simRemote.boxSocket.addEventListener("message", (event) => {
-            console.log(event);
+            // console.log(event);
             const update = JSON.parse(event.data);
             this.simDisplay.updatePositions(update.coordinates);
             this.simDisplay.updateBoundary(update.boxBoundaries);
