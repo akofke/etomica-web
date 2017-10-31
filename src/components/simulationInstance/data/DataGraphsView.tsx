@@ -31,7 +31,6 @@ const getGraphs = () => {
 };
 
 const getDisplayComponent = (dataStream: DataStream) => {
-    console.log(dataStream);
     if (!dataStream.loaded) {
         return <NonIdealState title={"Loading..."}/>;
     } else if (dataStream.isDataGroup) {

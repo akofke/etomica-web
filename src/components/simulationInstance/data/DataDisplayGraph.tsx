@@ -65,8 +65,6 @@ export class DataDisplayGraph extends React.Component<IMeterGraphProps, any> {
             chart.transform(this.chartType);
         });
 
-        console.log(chart);
-
     }
 
     public render() {

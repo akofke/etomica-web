@@ -8,6 +8,7 @@ import {Intent} from "@blueprintjs/core";
 import {MeterRemote} from "../api/MeterRemote";
 import {DataStream} from "../models/DataStream";
 import {ObservableArray} from "mobx/lib/types/observablearray";
+import {SimClassInfo} from "../components/simulationIndex/SimulationIndexView";
 
 export class SimulationStore {
     @observable.ref public sim?: SimulationInstance;
@@ -53,6 +54,7 @@ export class SimulationInstance {
     @observable.ref public rawModel: {[id: number]: any};
     @observable public status: ControlStatus = "paused";
     @observable public isSyncing: boolean = false;
+    @observable.ref public classInfo: SimClassInfo;
 
     public dataStreams: IObservableArray<DataStream> = observable([]);
 
@@ -109,8 +111,9 @@ export class SimulationInstance {
         this.loadingStatus = "loading";
         this.simRemote.fetchModel().then((res) => {
             runInAction(() => {
-                this.rawModel = res.data;
+                this.rawModel = res.data.model;
                 treeifyModel(this.rawModel);
+                this.classInfo = res.data.classInfo;
                 this.loadingStatus = "done";
             });
         }).catch((err) => {
