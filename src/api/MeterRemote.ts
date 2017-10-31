@@ -15,4 +15,8 @@ export class MeterRemote {
 
         this.socket = new WebSocket(`${WS_URL}/simulations/${simRemote.simId}/data/${meterId}`);
     }
+
+    public fetchDataInfo() {
+        return this.axios.get(`/${this.meterId}`);
+    }
 }

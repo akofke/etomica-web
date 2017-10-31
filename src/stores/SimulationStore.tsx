@@ -129,6 +129,8 @@ export class SimulationInstance {
                 this.dataStreams.replace(res.data.map((dataId: string) => {
                     return new DataStream(dataId, this);
                 }));
+
+                this.dataStreams.forEach((dataStream) => dataStream.fetchDataInfo());
             });
         });
     }
