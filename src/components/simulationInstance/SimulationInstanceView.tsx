@@ -31,6 +31,8 @@ export class SimulationInstanceView extends React.Component<any, any> {
 
                             <Tab2 id="meters" title="Meters" panel={<DataGraphsView/>}/>
 
+                            <Tab2 id="properties" title="Properties" panel={<TreeModelView/>} />
+
                         </Tabs2>
                     </main>
                 </div>
