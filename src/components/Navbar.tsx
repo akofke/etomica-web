@@ -18,6 +18,9 @@ export const Navbar = observer(() => {
                 </div>
             </div>
             <div className="pt-navbar-group pt-align-right">
+                <Link to={"/instances"}>
+                    <Button className="pt-minimal" iconName={"geosearch"} text={"See all instances"}/>
+                </Link>
                 <Popover2>
                     <Button iconName={"cog"} className="pt-minimal"/>
                     <Menu>
