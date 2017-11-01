@@ -24,8 +24,10 @@ export class Simulation3D extends SimulationDisplay {
         window.addEventListener("resize", () => this.engine.resize());
         console.log(this.scene);
 
+        const fpsMeter = document.getElementById("fps-meter");
         this.engine.runRenderLoop(() => {
             this.scene.render();
+            fpsMeter.innerHTML = "FPS: " + this.engine.getFps().toFixed();
         });
 
     }
@@ -56,6 +58,7 @@ export class Simulation3D extends SimulationDisplay {
                 edgeMesh.enableEdgesRendering();
                 edgeMesh.edgesWidth = 5;
                 edgeMesh.edgesColor = new BABYLON.Color4(0, 0, 1, 1);
+                // edgeMesh.color = new BABYLON.Color3(1, 0, 0);
                 this.boxEdgeMeshes[boxIndex].push(edgeMesh);
                 edgeMesh.parent = boxMesh;
             });

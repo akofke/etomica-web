@@ -19,6 +19,7 @@ export class ConfigurationView extends React.Component<any, any> {
     public render() {
         return (
             <div className={"Config-container"}>
+                <span id="fps-meter"/>
                 <canvas id={"Config-canvas"} ref={this.setCanvasRef}>No Canvas</canvas>
             </div>
         );
