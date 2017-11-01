@@ -20,7 +20,8 @@ export class DataDisplayGraph extends React.Component<IMeterGraphProps, any> {
         const chart = c3.generate({
             bindto: `#meter-chart-${this.props.dataStream.dataId}`,
             size: {
-                width: 800
+                width: 800,
+                height: 350
             },
             data: {
                 x: "x",

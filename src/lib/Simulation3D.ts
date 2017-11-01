@@ -1,7 +1,9 @@
 import * as BABYLON from "babylonjs";
 import { SimulationDisplay } from "./SimulationDisplay";
+import AnaglyphArcRotateCamera = BABYLON.AnaglyphArcRotateCamera;
 
 export class Simulation3D extends SimulationDisplay {
+    private anaglyphCam: BABYLON.AnaglyphArcRotateCamera;
 
     constructor(mountElement: HTMLCanvasElement) {
         super();
@@ -9,8 +11,8 @@ export class Simulation3D extends SimulationDisplay {
         this.engine = new BABYLON.Engine(this.element, true);
         this.scene = new BABYLON.Scene(this.engine);
 
-        this.mainCam = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
-        // this.camera = new AnaglyphArcRotateCamera("aar_cam", -Math.PI/2, Math.PI/4, 20, Vector3.Zero(), 0.033, this.scene);
+        this.mainCam = new BABYLON.ArcRotateCamera("ArcRotateCamera", 1, 0.8, 15, new BABYLON.Vector3(0, 0, 0), this.scene);
+        this.anaglyphCam = new AnaglyphArcRotateCamera("aar_cam", -Math.PI/2, Math.PI/4, 20, BABYLON.Vector3.Zero(), 0.033, this.scene);
         this.followCam = new BABYLON.FollowCamera("followCam", BABYLON.Vector3.Zero(), this.scene);
 
 
@@ -41,15 +43,18 @@ export class Simulation3D extends SimulationDisplay {
             const edges: any[] = box["#boundary"]["#shape"]["#edges"];
             edges.forEach((edge, edgeIndex) => {
                 const edgeVertices: any[] = edge["#vertices"];
-                const edgeMesh = BABYLON.Mesh.CreateLines(
+                const edgeMesh = BABYLON.MeshBuilder.CreateLines(
                     `box${boxIndex}-edge${edgeIndex}`,
-                    edgeVertices.map((v) => new BABYLON.Vector3(v[0], v[1], v[2])),
+                    {
+                        points: edgeVertices.map((v) => new BABYLON.Vector3(v[0], v[1], v[2])),
+                        updatable: true
+                    },
                     this.scene,
-                    true
+
                 );
                 edgeMesh.material.alpha = 0.0;
                 edgeMesh.enableEdgesRendering();
-                edgeMesh.edgesWidth = 4.0;
+                edgeMesh.edgesWidth = 5;
                 edgeMesh.edgesColor = new BABYLON.Color4(0, 0, 1, 1);
                 this.boxEdgeMeshes[boxIndex].push(edgeMesh);
                 edgeMesh.parent = boxMesh;
@@ -95,15 +100,15 @@ export class Simulation3D extends SimulationDisplay {
             const edges: any[] = boundary.shape.edges;
             edges.forEach((edgeVertices, edgeIndex) => {
                 const edgeMesh = this.boxEdgeMeshes[boxIndex][edgeIndex];
-                BABYLON.MeshBuilder.CreateLines(
-                    edgeMesh.name,
+                const updatedMesh = BABYLON.MeshBuilder.CreateLines(
+                    null,
                     {
                         points: edgeVertices.map((v: any) => new BABYLON.Vector3(v[0], v[1], v[2])),
                         instance: edgeMesh as BABYLON.LinesMesh,
-                        updatable: true
                     },
-                    this.scene
+                    null
                 );
+                updatedMesh.enableEdgesRendering();
             });
         });
     }

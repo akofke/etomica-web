@@ -44,11 +44,13 @@ export class ConfigurationView extends React.Component<any, any> {
     public renderContextMenu(e: React.MouseEvent<HTMLElement>) {
         const pick = this.simDisplay.pick();
         console.log(pick);
-        return (
-            <Menu>
-                <MenuItem text="Follow Atom" onClick={() => this.simDisplay.followAtom(pick.pickedMesh)}/>
-            </Menu>
-        );
+        if(pick.hit) {
+            return (
+                <Menu>
+                    <MenuItem text="Follow Atom" onClick={() => this.simDisplay.followAtom(pick.pickedMesh)}/>
+                </Menu>
+            );
+        }
     }
 
     public resize() {
