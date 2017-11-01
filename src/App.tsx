@@ -12,6 +12,7 @@ import {observer} from "mobx-react";
 import uiStore from "./stores/UIStore";
 import DevTools from "mobx-react-devtools";
 import {SimulationInstancePage} from "./components/simulationInstance/SimulationInstancePage";
+import {InstancesList} from "./components/instancesList/InstancesList";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 declare let process: any;
@@ -22,6 +23,7 @@ export const App = observer(() => (
             <Navbar/>
             <div id="App-content">
                 <Route exact={true} path={"/"} component={SimulationIndexView}/>
+                <Route path={"/instances"} component={InstancesList}/>
                 <Route path={"/create/:simClassName"} component={CreateSimulationInstance}/>
                 <Route path={"/view/:simId"} component={SimulationInstancePage}/>
             </div>

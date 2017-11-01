@@ -1,0 +1,9 @@
+.InstanceList-item {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.InstanceList-item > div {
+    margin: 1rem;
+}
