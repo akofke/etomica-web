@@ -4,13 +4,12 @@ import {Intent, NonIdealState, Spinner, Tab2, Tabs2} from "@blueprintjs/core";
 import {ConfigurationView} from "./configuration/ConfigurationView";
 import {IConstructionParams} from "../AddMeterForm";
 import {AddMeterDialog} from "../AddMeterDialog";
-import {TreeModelView} from "../TreeModelView";
+import {TreeModelView} from "./properties/TreeModelView";
 import {InstanceSidebar} from "./InstanceSidebar";
 
 import "./SimulationInstance.css";
 import {simulationStore} from "../../stores/SimulationStore";
 import {DataGraphsView} from "./data/DataGraphsView";
-
 
 export class SimulationInstanceView extends React.Component<any, any> {
     private readonly sim = simulationStore.sim;

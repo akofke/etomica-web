@@ -9,6 +9,7 @@ import {MeterRemote} from "../api/MeterRemote";
 import {DataStream} from "../models/DataStream";
 import {ObservableArray} from "mobx/lib/types/observablearray";
 import {SimClassInfo} from "../components/simulationIndex/SimulationIndexView";
+import {PropertyControl} from "../models/PropertyControl";
 
 export class SimulationStore {
     @observable.ref public sim?: SimulationInstance;
@@ -57,6 +58,7 @@ export class SimulationInstance {
     @observable.ref public classInfo: SimClassInfo;
 
     public dataStreams: IObservableArray<DataStream> = observable([]);
+    public propertyControls: IObservableArray<PropertyControl> = observable([]);
 
     constructor(simId: string) {
         this.simId = simId;
@@ -145,6 +147,18 @@ export class SimulationInstance {
 
     @computed get model(): any {
         return this.rawModel[0];
+    }
+
+    @action public addPropertyControl(jsonTreePath: [string | number]) {
+        const wrapper = jsonTreePath.slice(1, -1).reduceRight((prev, current) => {
+            return prev[current];
+        }, this.model);
+        const id: number = wrapper.id;
+        const propName = jsonTreePath[0] as string;
+        const currentValue = wrapper[propName];
+        const control = new PropertyControl(id, propName, currentValue, this);
+        console.log(control);
+        this.propertyControls.push(control);
     }
 
 }

@@ -1,5 +1,6 @@
 import Axios, {AxiosInstance} from "axios";
 import {API_URL, WS_URL} from "./";
+import {IPropertyUpdate} from "../models/PropertyControl";
 
 // TODO: use webpack define plugin
 
@@ -35,6 +36,10 @@ export class SimulationRemote {
 
     public pause() {
         return this.axios.put("/control", {status: "pause"});
+    }
+
+    public updateProperty(update: IPropertyUpdate) {
+        return this.axios.put("/properties", update);
     }
 
 }
